@@ -10,22 +10,16 @@ var UserSchema = new Schema({
     name: String,
     phone: String,
     email: String,
-    balance: Number,
-    verified: Boolean,
-    vouchers: [{
-        code: {
-            type: String,
-            unique: true,
-            required: true
-        },
-        amount: Number,
-        expired: {
-            type: Date,
-            default: Date.now
-        },
-        receiver: String,
-        claimed: Boolean
-    }]
+    authToken: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    verify: {
+        type: Boolean,
+        default: false
+    }
 });
+
 
 module.exports = mongoose.model('User', UserSchema);

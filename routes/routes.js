@@ -2,10 +2,9 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/users.model');
 var uuid = require('uuid');
-// var nodemailer = require('nodemailer');
-// var async = require('async');
-// var crypto = require('crypto');
-// var userController = require('../controllers/user.controller');
+var crypto = require('crypto');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 //GET
 router.get('/users', (req, res) => {
@@ -21,49 +20,70 @@ router.get('/users', (req, res) => {
     })
 })
 
-// //Verifikasi
-// router.get('/users/verifikasi-email/:token', (req, res) => {
-//     User.findOneAndUpdate({
-//             emailVerificationToken: req.params.token
-//         }, {
-//             $set: {
-//                 emailConfirmed: 'yes'
-//             },
-//             $unset: {
-//                 emailVerificationToken: ''
-//             }
-//         }, {
-//             save: true,
-//             upsert: false
-//         },
-//         function (err, user) {
-//             if (err) {
-//                 res.send(err);
-//             }
-//             if (user.role == 'guru') {
-//                 req.flash('SaveSucces', 'Terimakasih, Email anda telah diverifikasi');
-//                 req.redirect('/user');
-//             } else if (data.role == 'unverifed') {
-//                 res.redirect('/verifed-data');
-//             }
-//         }
-//     )
-// })
+//GET VERIFY EMAIL
+router.get('/verify', (req, res) => {
+    User.findOne({
+        authToken: req.query.token
+    }, (err, user) => {
+        if (err) {
+            return console.error(err);
+        }
+
+        user.verify = true;
+        user.save(function (err) {
+            if (err) return console.error(err);
+            console.log('Succesfully updated user');
+            console.log(user);
+            res.send(user)
+        })
+    })
+
+    sgMail.send({
+        to: User.email,
+        from: 'does6programmer@gmail.com',
+        subject: 'Email confirmed!',
+        html: 'Awesome! We can now send you kick-ass emails'
+    }, function (err, json) {
+        if (err) {
+            return console.error(err);
+        }
+        console.log(json);
+    });
+})
+
 
 //POST
 router.post('/user', (req, res) => {
+    var seed = crypto.randomBytes(20);
+    var authToken = crypto.createHash('sha1').update(seed + req.body.email).digest('hex');
     var user = new User();
     user.id = uuid.v4();
     user.name = req.body.name;
     user.phone = req.body.phone;
     user.email = req.body.email;
+    user.authToken = authToken,
+        user.verify = false
 
     user.save(function (err) {
-        if (err) return next(err);
+        if (err) return res.json("create user failed");
         res.json('Succes create user');
     })
 
+    var authenticationURL = 'http://192.168.2.12:3000/v1/verify?token=' + user.authToken;
+    sgMail.send({
+        to: user.email,
+        from: 'doesprogrammergen6@gmail.com',
+        subject: 'Confirm your email',
+        html: '<a target=_blank href=\"' + authenticationURL + '\">Confirm your email</a>'
+    }, (err, json) => {
+        if (err) {
+            return console.error(err);
+        }
+        console.log(json)
+    })
+
 })
+
 
 //UPDATE
 router.put('/user/:id', (req, res) => {
