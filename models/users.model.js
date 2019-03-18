@@ -10,6 +10,7 @@ var UserSchema = new Schema({
     name: String,
     phone: String,
     email: String,
+<<<<<<< HEAD
     authToken: {
         type: String,
         required: true,
@@ -19,6 +20,11 @@ var UserSchema = new Schema({
         type: Boolean,
         default: false
     }
+=======
+    balance: Number,
+    verified: Boolean,
+   
+>>>>>>> 29f3baad2b18e1e147057c407b91eee5d659aa78
 });
 
 

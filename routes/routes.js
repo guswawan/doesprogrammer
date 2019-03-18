@@ -2,9 +2,17 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/users.model');
 var uuid = require('uuid');
+<<<<<<< HEAD
 var crypto = require('crypto');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+=======
+const voucher_controller = require('../controller/voucher.controller');
+// var nodemailer = require('nodemailer');
+// var async = require('async');
+// var crypto = require('crypto');
+// var userController = require('../controllers/user.controller');
+>>>>>>> 29f3baad2b18e1e147057c407b91eee5d659aa78
 
 //GET
 router.get('/users', (req, res) => {
@@ -119,4 +127,9 @@ router.delete('/user/:id', (req, res) => {
         });
     });
 });
+
+//POST VOUCHER
+router.post('/voucher', voucher_controller.voucher_create);
+
+
 module.exports = router;
