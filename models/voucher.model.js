@@ -1,30 +1,15 @@
 var mongoose = require('mongoose');
+var moment = require('moment');
 var Schema = mongoose.Schema;
 
 var VoucherSchema = new Schema({
-<<<<<<< HEAD
-    code: {
-        type: String,
-        unique: true
-    },
-    amount: String,
-    expired: {
-        type: Date,
-        default: Date.now()
-    },
-    receiver: String,
-    claimed: Boolean
-})
-=======
 
 	code: {type: String, unique: true, required: true},
     amount: {type: Number, required: true},
-    expired: {type: Date, required: true},
-    type: {type: Date, default: Date.now, required: true},
+    expired: {type: Date, default: moment().add(30, 'days').calendar(), required: true},
     receiver: {type: String},
-    claimed: {type: Boolean}
+    claimed: {type: Boolean, default: false}
 
 });
->>>>>>> 29f3baad2b18e1e147057c407b91eee5d659aa78
 
 module.exports = mongoose.model('Voucher', VoucherSchema);
