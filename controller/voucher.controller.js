@@ -32,7 +32,7 @@ exports.voucher_create = function (req, res, next) {
 		}
 
 		//CLAIMED URL
-		var authenticationURL = 'http://192.168.2.11:3000/v1/claimed/'+voucher._id+'?code=' + voucher.code;
+		var authenticationURL = 'http://192.168.2.12:3000/v1/claimed/'+voucher._id+'?code=' + voucher.code;
 
 		//TRANSPORTE GMAIL
 		var transporter = nodemailer.createTransport ({
