@@ -4,6 +4,7 @@ var uuid = require('uuid');
 var nodemailer = require('nodemailer');
 var user_controller = require('../controller/user.controller');
 var voucher_controller = require('../controller/voucher.controller');
+var admin_controller = require('../controller/admin.controller');
 
 
 //POST USER
@@ -37,5 +38,11 @@ router.put('/:code/update', voucher_controller.voucher_update);
 
 //DELETE VOUCHER
 router.delete('/:code/delete', voucher_controller.voucher_delete);
+
+//=============================================================//
+
+router.post('/admin', admin_controller.admin_create);
+
+router.get('/admin', admin_controller.admin_detail);
 
 module.exports = router;
