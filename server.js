@@ -3,13 +3,13 @@ var bodyParser = require('body-parser');
 var users = require('./routes/routes');
 var PORT = 3000;
 var mongoose = require('mongoose');
-var moment = require('moment');
-
+var cors = require('cors');
 
 
 var app = express();
 
 //BodyParser
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 

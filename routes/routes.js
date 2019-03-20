@@ -1,9 +1,27 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/users.model');
 var uuid = require('uuid');
-var nodemailer = require ('nodemailer');
+var nodemailer = require('nodemailer');
+var user_controller = require('../controller/user.controller');
 var voucher_controller = require('../controller/voucher.controller');
+
+
+//POST USER
+router.post('/user', user_controller.user_create);
+
+//GET VERYFIED USER
+router.get('/verify/:id', user_controller.user_verify);
+
+//GET USERS
+router.get('/users', user_controller.users_detail);
+
+//UPDATE USER
+router.put('/user/:id', user_controller.user_update);
+
+//DELETE USER
+router.delete('/user/:id', user_controller.user_delete);
+
+//=============================================================//
 
 //POST VOUCHER
 router.post('/voucher', voucher_controller.voucher_create);
