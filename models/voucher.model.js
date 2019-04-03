@@ -4,11 +4,30 @@ var Schema = mongoose.Schema;
 
 var VoucherSchema = new Schema({
 
-	code: {type: String, unique: true, required: true},
-    amount: {type: Number, required: true},
-    expired: {type: Date, default: moment().add(30, 'days').calendar(), required: true},
-    receiver: {type: String},
-    claimed: {type: Boolean, default: false}
+    code: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    name: {
+        type: String
+    },
+    amount: {
+        type: Number,
+        required: true
+    },
+    expired: {
+        type: Date,
+        default: moment().add(30, 'days').calendar(),
+        required: true
+    },
+    receiver: {
+        type: String
+    },
+    claimed: {
+        type: Boolean,
+        default: false
+    }
 
 });
 
