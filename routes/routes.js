@@ -20,7 +20,7 @@ router.get('/users', user_controller.users_detail);
 router.put('/user/:id', user_controller.user_update);
 
 //DELETE USER
-router.delete('/user/:id', user_controller.user_delete);
+router.delete('/users/:id', user_controller.user_delete);
 
 //=============================================================//
 
@@ -28,16 +28,16 @@ router.delete('/user/:id', user_controller.user_delete);
 router.post('/voucher', voucher_controller.voucher_create);
 
 //GET CLAIMED VOUCHER
-router.get('/claimed/:code', voucher_controller.voucher_claim);
+router.get('/claimed/:id', voucher_controller.voucher_claim);
 
 //GET VOUCHERS
 router.get('/vouchers', voucher_controller.vouchers_detail);
 
 //UPDATE VOUCHER
-router.put('/:code/update', voucher_controller.voucher_update);
+router.put('/voucher/:id', voucher_controller.voucher_update);
 
 //DELETE VOUCHER
-router.delete('/:code/delete', voucher_controller.voucher_delete);
+router.delete('/voucher/:id', voucher_controller.voucher_delete);
 
 //=============================================================//
 

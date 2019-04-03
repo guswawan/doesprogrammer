@@ -11,7 +11,10 @@ var UserSchema = new Schema({
     // },
     name: String,
     phone: String,
-    email: String,
+    email: {
+        type: String,
+        unique: true
+    },
     balance: {
         type: Number,
         default: 0
