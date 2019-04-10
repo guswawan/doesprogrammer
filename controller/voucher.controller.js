@@ -106,19 +106,22 @@ exports.vouchers_detail = function (req, res) {
 
 //==UPDATE VOUCHER==//
 exports.voucher_update = function (req, res) {
+	console.log('update voucher', req.body)
+
 	var updateVoucher = {
 		amount: req.body.amount
 	}
 
 	Voucher.findOneAndUpdate({
-		id: req.params.id
-	}, updateVoucher, err => {
+		_id: req.params.id
+	}, updateVoucher, (err, result) => {
 		if (err) {
 			return res.json({
 				success: false,
 				error: err
 			});
 		} else {
+			console.log(result)
 			return res.json({
 				success: true
 			});
