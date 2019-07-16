@@ -8,10 +8,12 @@ var cors = require('cors');
 
 var app = express();
 
-//BodyParser
+//Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 
 //ROUTER

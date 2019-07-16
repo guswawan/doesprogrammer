@@ -1,6 +1,5 @@
 var crypto = require('crypto');
 var User = require('../models/user.model');
-var uuid = require('uuid');
 var nodemailer = require('nodemailer');
 
 
@@ -11,6 +10,9 @@ exports.user_create = function (req, res, next) {
     req.body.authToken = authToken;
 
     var user = new User(req.body);
+
+
+
 
     user.save(function (err, user) {
         if (err) {
@@ -71,7 +73,7 @@ exports.user_verify = function (req, res) {
         if (err) {
             res.status(400).send('raiso')
         }
-        res.send('ok')
+        res.send('Selamat email anda telah terverifikasi otomatis')
     })
 };
 
