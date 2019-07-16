@@ -32,7 +32,7 @@ exports.voucher_create = function (req, res, next) {
 		}
 
 		//CLAIMED URL
-		var authenticationURL = 'http://192.168.2.12:3000/v1/claimed/'+voucher._id+'?code=' + voucher.code;
+		var authenticationURL = 'http://192.168.2.11:3000/v1/claimed/'+voucher._id+'?code=' + voucher.code;
 
 		//TRANSPORTE GMAIL
 		var transporter = nodemailer.createTransport ({
@@ -78,7 +78,7 @@ exports.voucher_create = function (req, res, next) {
 exports.voucher_claim = function (req, res) {
 	Voucher.updateOne({
         code: req.params.code,
-        claimed: true
+        claimed:true
     }, (err, voucher) => {
         if (err) {
             res.status(400).send('Permintaan tak layak');
@@ -87,13 +87,19 @@ exports.voucher_claim = function (req, res) {
     })
 };
 
+
 //==GET VOUCHERS==//
 exports.vouchers_detail = function (req, res) {
-	 Voucher.find(function (err, voucher){
-		if (err)
-			return next (err);
+	Voucher.find(function (err, vouchers){
+		if (err) return res.json ({
+			success: false,
+			error: err
+		});
 
-		res.send(voucher);
+		return res.json({
+			success: true,
+			vouchers: vouchers
+		});
 	})
 };
 
@@ -102,10 +108,19 @@ exports.voucher_update = function (req, res) {
 	 Voucher.findOneAndUpdate(req.params.code,
 	 	{$set: req.body},
 	 	function (err){
-		if (err)
-			return next (err);
+		if (err) {
+			return res.json ({
+				success: false,
+				error: err
+		});
 
-		res.send('Voucher updated.');
+		} else {
+			return res.json({
+				success: true
+			});
+		}
+
+		// res.send('Voucher updated.');
 	})
 };
 
@@ -113,11 +128,10 @@ exports.voucher_update = function (req, res) {
 exports.voucher_delete = function (req, res) {
 	 Voucher.findOneAndDelete(req.params.code,
 	 	function (err){
-		if (err)
-			return next (err);
-
-		console.log('voucher deleted.')
-		res.send('Voucher deleted.');
+		if (err) return res.send(err);
+		return res.json({
+			success: true
+		});
 	})
 };
 

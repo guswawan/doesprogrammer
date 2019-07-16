@@ -28,7 +28,7 @@ router.delete('/user/:id', user_controller.user_delete);
 router.post('/voucher', voucher_controller.voucher_create);
 
 //GET CLAIMED VOUCHER
-router.get('/claimed/:code', voucher_controller.voucher_claim);
+router.get('/claimed/:id', voucher_controller.voucher_claim);
 
 //GET VOUCHERS
 router.get('/vouchers', voucher_controller.vouchers_detail);
