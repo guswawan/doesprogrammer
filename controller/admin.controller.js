@@ -2,7 +2,7 @@ var Admin = require('../models/admin.model');
 
 
 
-//POST=CREATE ADMIN
+//==POST==//
 exports.admin_create = function (req, res) {
     /*  var admin = new Admin(
      	{

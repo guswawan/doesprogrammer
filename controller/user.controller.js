@@ -3,7 +3,7 @@ var User = require('../models/user.model');
 var nodemailer = require('nodemailer');
 
 
-//POST USER
+//==POST USER==//
 exports.user_create = function (req, res, next) {
     var seed = crypto.randomBytes(20);
     var authToken = crypto.createHash('sha1').update(seed + req.body.email).digest('hex');
@@ -11,12 +11,8 @@ exports.user_create = function (req, res, next) {
 
     var user = new User(req.body);
 
-
-
-
     user.save(function (err, user) {
         if (err) {
-            console.log(err)
             res.status(500).json({
                 message: 'Failed.',
                 error: err
@@ -32,7 +28,7 @@ exports.user_create = function (req, res, next) {
                     pass: 'afterlife123'
                 }
             })
-            var authenticationURL = 'http://192.168.2.12:3000/v1/verify/' + user._id + '?token=' + user.authToken;
+            var authenticationURL = 'http://192.168.2.11:3000/v1/verify/' + user._id + '?token=' + user.authToken;
             var mailOptions = {
                 from: 'does6programmer <cahyodoes6@gmail.com>',
                 to: user.email,
@@ -45,14 +41,14 @@ exports.user_create = function (req, res, next) {
                 if (err) {
                     console.log(err)
                     res.status(200).json({
-                        message: 'Succes create user',
+                        message: 'Success create user',
                         userCreated: true,
                         emailSent: false
                     });
                 } else {
                     console.log("Message sent", info)
                     res.status(200).json({
-                        message: 'Succes create user & email sent',
+                        message: 'Success create user & email sent',
                         userCreated: true,
                         emailSent: true
                     });
@@ -63,12 +59,12 @@ exports.user_create = function (req, res, next) {
     })
 };
 
-//GET VERIFIED USER
+//==GET VERIFIED USER==//
 exports.user_verify = function (req, res) {
     User.updateOne({
         _id: req.params.id
     }, {
-        verify: true
+        verified: true
     }, (err, user) => {
         if (err) {
             res.status(400).send('raiso')
@@ -77,7 +73,7 @@ exports.user_verify = function (req, res) {
     })
 };
 
-//GET USERS
+//==GET USERS==//
 exports.users_detail = function (req, res) {
     User.find((err, users) => {
         if (err) return res.json({
@@ -91,7 +87,7 @@ exports.users_detail = function (req, res) {
     })
 };
 
-//USER PUT UPDATE
+//==USER PUT UPDATE==//
 exports.user_update = function (req, res) {
     var updateUser = {
         name: req.body.name
@@ -99,7 +95,7 @@ exports.user_update = function (req, res) {
 
     User.findOneAndUpdate({
         id: req.params.id
-    }, updateUser, err => {
+    }, updateUser, (err, updated) => {
         if (err) {
             return res.json({
                 success: false,
@@ -113,15 +109,21 @@ exports.user_update = function (req, res) {
     });
 };
 
-//USER DELETE
+//==USER DELETE==//
 exports.user_delete = function (req, res) {
     var deleteById = {
         _id: req.params.id
     }
-    User.findOneAndDelete(deleteById, err => {
-        if (err) return res.send(err);
+    User.findByIdAndDelete(deleteById, (err, deleted) => {
+        if (err)
+            return res.json({
+                success: false,
+                error: err,
+                message: "delete failed."
+            });
         return res.json({
-            succes: true
+            succes: true,
+            message: "delete success."
         });
     });
 };

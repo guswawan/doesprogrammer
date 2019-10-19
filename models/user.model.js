@@ -1,9 +1,7 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var Joi = require('joi');
 
 
-var UserSchema = new Schema({
+var UserSchema = new mongoose.Schema({
     // id: {
     //     type: String,
     //     unique: true,
@@ -29,5 +27,6 @@ var UserSchema = new Schema({
         default: false
     }
 });
+
 
 module.exports = mongoose.model('User', UserSchema);

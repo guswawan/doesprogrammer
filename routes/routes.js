@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var uuid = require('uuid');
-var nodemailer = require('nodemailer');
 var user_controller = require('../controller/user.controller');
 var voucher_controller = require('../controller/voucher.controller');
 var admin_controller = require('../controller/admin.controller');
@@ -20,7 +18,7 @@ router.get('/users', user_controller.users_detail);
 router.put('/user/:id', user_controller.user_update);
 
 //DELETE USER
-router.delete('/users/:id', user_controller.user_delete);
+router.post('/delete/:id', user_controller.user_delete);
 
 //=============================================================//
 
@@ -37,12 +35,12 @@ router.get('/vouchers', voucher_controller.vouchers_detail);
 router.put('/voucher/:id', voucher_controller.voucher_update);
 
 //DELETE VOUCHER
-router.delete('/voucher/:id', voucher_controller.voucher_delete);
+router.post('/voucher/:id', voucher_controller.voucher_delete);
 
 //=============================================================//
 
 router.post('/admin', admin_controller.admin_create);
-
 router.get('/admin', admin_controller.admin_detail);
+
 
 module.exports = router;

@@ -34,31 +34,27 @@ exports.voucher_create = function (req, res, next) {
 		}
 
 		//CLAIMED URL
-<<<<<<< HEAD
-		var authenticationURL = 'http://192.168.2.11:3000/v1/claimed/'+voucher._id+'?code=' + voucher.code;
-=======
-		/* var authenticationURL = 'http://192.168.2.12:3000/v1/claimed/' + voucher._id + '?code=' + voucher.code; */
->>>>>>> f97c624c2c2b6ea75bf5dd7333dbbb39b43a6b00
+		var authenticationURL = 'http://192.168.2.12:3000/v1/claimed/' + voucher._id + '?code=' + voucher.code;
 
 		//TRANSPORTE GMAIL
-		/* var transporter = nodemailer.createTransport({
-			service: 'gmail',
+		var transporter = nodemailer.createTransport({
+			host: 'gmail',
 			auth: {
-				user: 'agsn.does6@gmail.com',
+				user: 'agsn.does@gmail.com',
 				pass: 'does6programmer'
 			}
-		}); */
+		}); 
 
 		//MAIL OPTION
-		/* 	var mailOptions = {
+		var mailOptions = {
 				from: 'does6programmer <agsn.does6@gmail.com>',
 				to: req.body.receiver,
 				subject: 'VOUCHER GIVE AWAY!',
 				text: 'You have a voucher with the following details... Amount: ' + req.body.amount + ' expired: ' + req.body.expired + 'receiver:' + req.body.receiver + 'name: ' + req.body.name,
 				html: '<p>You have a voucher with the following link bellow...</p><a target=_blank href=\"' + authenticationURL + '\">' + authenticationURL + '</a>'
-			}; */
+			};
 
-		/* 	transporter.sendMail(mailOptions, function (err, info) {
+		transporter.sendMail(mailOptions, function (err, info) {
 				if (err) {
 					console.log(err);
 					res.status(200).json({
@@ -75,7 +71,7 @@ exports.voucher_create = function (req, res, next) {
 						voucherSend: true
 					});
 				}
-			}); */
+			});
 
 	});
 };
@@ -83,16 +79,6 @@ exports.voucher_create = function (req, res, next) {
 //==GET VERIFY CLAIM VOUCHER==//
 exports.voucher_claim = function (req, res) {
 	Voucher.updateOne({
-<<<<<<< HEAD
-        code: req.params.code,
-        claimed:true
-    }, (err, voucher) => {
-        if (err) {
-            res.status(400).send('Permintaan tak layak');
-        }
-        res.send('okay. Voucher berhasil diklaim')
-    })
-=======
 		_id: req.params.id
 	}, {
 		claimed: true
@@ -102,24 +88,11 @@ exports.voucher_claim = function (req, res) {
 		}
 		res.send('ok. Terklaim')
 	})
->>>>>>> f97c624c2c2b6ea75bf5dd7333dbbb39b43a6b00
 };
 
 
 //==GET VOUCHERS==//
 exports.vouchers_detail = function (req, res) {
-<<<<<<< HEAD
-	Voucher.find(function (err, vouchers){
-		if (err) return res.json ({
-			success: false,
-			error: err
-		});
-
-		return res.json({
-			success: true,
-			vouchers: vouchers
-		});
-=======
 	Voucher.find((err, vouchers) => {
 		if (err) return res.json({
 			success: false,
@@ -129,31 +102,11 @@ exports.vouchers_detail = function (req, res) {
 			success: true,
 			vouchers: vouchers
 		})
->>>>>>> f97c624c2c2b6ea75bf5dd7333dbbb39b43a6b00
 	})
 };
 
 //==UPDATE VOUCHER==//
 exports.voucher_update = function (req, res) {
-<<<<<<< HEAD
-	 Voucher.findOneAndUpdate(req.params.code,
-	 	{$set: req.body},
-	 	function (err){
-		if (err) {
-			return res.json ({
-				success: false,
-				error: err
-		});
-
-		} else {
-			return res.json({
-				success: true
-			});
-		}
-
-		// res.send('Voucher updated.');
-	})
-=======
 	console.log('update voucher', req.body)
 
 	var updateVoucher = {
@@ -175,20 +128,10 @@ exports.voucher_update = function (req, res) {
 			});
 		}
 	});
->>>>>>> f97c624c2c2b6ea75bf5dd7333dbbb39b43a6b00
 };
 
 //==DELETE VOUCHER==//
 exports.voucher_delete = function (req, res) {
-<<<<<<< HEAD
-	 Voucher.findOneAndDelete(req.params.code,
-	 	function (err){
-		if (err) return res.send(err);
-		return res.json({
-			success: true
-		});
-	})
-=======
 	var deleteById = {
 		_id: req.params.id
 	}
@@ -199,7 +142,6 @@ exports.voucher_delete = function (req, res) {
 				success: true
 			});
 		});
->>>>>>> f97c624c2c2b6ea75bf5dd7333dbbb39b43a6b00
 };
 
 
