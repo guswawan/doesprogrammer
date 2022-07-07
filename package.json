@@ -18,7 +18,7 @@
     "email-check": "^1.1.0",
     "express": "^4.16.4",
     "joi": "^14.3.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mongoose": "^5.4.19",
     "nodemailer": "^4.7.0",
     "nodemon": "^1.18.10",
